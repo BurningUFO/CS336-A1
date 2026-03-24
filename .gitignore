@@ -161,3 +161,15 @@ cython_debug/
 
 .ruff_cache/
 *.zip
+
+# Local training artifacts / datasets
+data/
+checkpoints/
+test_log/
+experiments/**/outputs/
+images/_tmp/
+
+# Local scratch files
+.bpe_*.json
+.bpe_*.log
+assignment1_raw.txt
