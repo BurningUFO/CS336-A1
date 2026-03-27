@@ -168,6 +168,8 @@ checkpoints/
 test_log/
 experiments/**/outputs/
 images/_tmp/
+outputs/_*
+outputs/openwebtext_bpe_chunked/
 
 # Local scratch files
 .bpe_*.json
@@ -177,6 +179,8 @@ assignment1_raw.txt
 # Local writeup scratch files
 night-work.md
 problems_v2.md
+problems.md
 to do.md
 调learning_rate.md
 Problem (`adamwAccounting`)：AdamW 资源估算.md
+cs336_basics/train_bpe_practice_summary.md

@@ -1,6 +1,6 @@
 # Images
 
-本目录用于存放 `cs336_spring2025_assignment1_basics_zh.md` 中引用的图像文件。
+本目录用于存放 `cs336_spring2025_assignment1_basics_zh_v2.md` 与 `deliverable.md` 中引用的图像文件。
 
 当前 Markdown 已引用并已实际生成如下图片文件：
 
