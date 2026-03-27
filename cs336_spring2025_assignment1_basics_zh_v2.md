@@ -445,7 +445,9 @@ def decode(self, ids: list[int]) -> str
 
 (a) 从 TinyStories 和 OpenWebText 中各抽样 10 篇文档。使用你先前训练好的 TinyStories 与 OpenWebText 分词器（词表大小分别为 10K 和 32K），将这些抽样文档编码为整数 ID。每个分词器的压缩率（bytes/token）是多少？
 
-`Deliverable`：用一到两句话回答。
+`Deliverable`：
+
+我实际测得 TinyStories 分词器在 TinyStories 验证文本上的压缩率约为 `4.12 bytes/token`（`22,502,601 / 5,461,210`），而 OpenWebText `32k` 分词器在我编码的 OWT `32MB` 验证子集上的压缩率约为 `4.41 bytes/token`（`32,166,578 / 7,297,642`）。总体上，两个分词器都能把常见字节片段合并成较长 token，而 OWT 分词器在开放域网页文本上的压缩率略高一些，这与其训练语料更开放、更杂、更容易出现固定网页片段和长子词有关。
 
 (b) 如果你用 TinyStories 分词器去分词你的 OpenWebText 样本，会发生什么？比较压缩率，并 / 或定性描述发生的情况。
 
@@ -453,7 +455,9 @@ def decode(self, ids: list[int]) -> str
 
 (c) 估计你的分词器吞吐量（例如，以 bytes/second 为单位）。对整个 Pile 数据集（825GB 文本）完成分词需要多长时间？
 
-`Deliverable`：用一到两句话回答。
+`Deliverable`：
+
+根据我对 OWT 子集的实际编码时间估计，当前分词器吞吐量大约为 `2.5 × 10^4 bytes/s`（约 `25 KB/s`）：`256MB` 训练子集和 `32MB` 验证子集的测量结果都落在这个量级。按这个速度估算，完成整个 Pile（`825 GB` 文本）的分词大约需要 `3.29 × 10^7` 秒，也就是约 `381` 天，因此如果不进一步优化实现或并行化，这样的纯 Python 路径并不适合全量大语料分词。
 
 (d) 使用你的 TinyStories 和 OpenWebText 分词器，把各自的训练集和开发集编码成整数 token ID 序列。我们稍后会用它们来训练语言模型。我们建议把 token ID 序列序列化为数据类型为 `uint16` 的 NumPy 数组。为什么 `uint16` 是合适的选择？
 
