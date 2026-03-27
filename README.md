@@ -15,6 +15,9 @@
    - [cs336_spring2025_assignment1_basics_zh_v2.md](./cs336_spring2025_assignment1_basics_zh_v2.md)
 3. 原版作业 handout：
    - [cs336_spring2025_assignment1_basics.pdf](./cs336_spring2025_assignment1_basics.pdf)
+4. 课程相关笔记：
+   - [3b1b_note.md](./3b1b_note.md)
+   - [LEC1-8_note.md](./LEC1-8_note.md)
 
 ## 代码实现位置
 
