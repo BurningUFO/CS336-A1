@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="560" viewBox="0 0 1180 560">
+<rect width="100%" height="100%" fill="white"/>
+<text x="590" y="34" text-anchor="middle" font-size="24" font-family="Arial">Pre-norm vs Post-norm Transformer</text>
+<line x1="385" y1="52" x2="425" y2="52" stroke="#1f77b4" stroke-width="3"/>
+<circle cx="405" cy="52" r="4.5" fill="#1f77b4"/>
+<text x="437" y="57" font-size="14" font-family="Arial">Pre-norm baseline</text>
+<line x1="595" y1="52" x2="635" y2="52" stroke="#d62728" stroke-width="3"/>
+<circle cx="615" cy="52" r="4.5" fill="#d62728"/>
+<text x="647" y="57" font-size="14" font-family="Arial">Post-norm</text>
+<line x1="70.00" y1="90" x2="70.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="70.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">0</text>
+<line x1="172.00" y1="90" x2="172.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="172.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">100</text>
+<line x1="274.00" y1="90" x2="274.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="274.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">200</text>
+<line x1="376.00" y1="90" x2="376.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="376.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">300</text>
+<line x1="478.00" y1="90" x2="478.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="478.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">400</text>
+<line x1="580.00" y1="90" x2="580.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="580.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">500</text>
+<line x1="70" y1="469.87" x2="580.0" y2="469.87" stroke="#ececec" stroke-width="1"/>
+<text x="60" y="473.87" text-anchor="end" font-size="12" font-family="Arial" fill="#444">2</text>
+<line x1="70" y1="368.57" x2="580.0" y2="368.57" stroke="#ececec" stroke-width="1"/>
+<text x="60" y="372.57" text-anchor="end" font-size="12" font-family="Arial" fill="#444">4</text>
+<line x1="70" y1="267.27" x2="580.0" y2="267.27" stroke="#ececec" stroke-width="1"/>
+<text x="60" y="271.27" text-anchor="end" font-size="12" font-family="Arial" fill="#444">6</text>
+<line x1="70" y1="165.97" x2="580.0" y2="165.97" stroke="#ececec" stroke-width="1"/>
+<text x="60" y="169.97" text-anchor="end" font-size="12" font-family="Arial" fill="#444">8</text>
+<rect x="70" y="90" width="510.0" height="390" fill="none" stroke="#222" stroke-width="1.3"/>
+<text x="325.00" y="78" text-anchor="middle" font-size="16" font-family="Arial">0-500 step</text>
+<polyline fill="none" stroke="#1f77b4" stroke-width="3" points="70.00,102.02 580.00,469.57"/>
+<polyline fill="none" stroke="#d62728" stroke-width="3" points="70.00,102.02 580.00,467.66"/>
+<circle cx="70.00" cy="102.02" r="4.5" fill="#1f77b4"/>
+<circle cx="580.00" cy="469.57" r="4.5" fill="#1f77b4"/>
+<circle cx="70.00" cy="102.02" r="4.5" fill="#d62728"/>
+<circle cx="580.00" cy="467.66" r="4.5" fill="#d62728"/>
+<line x1="635.00" y1="90" x2="635.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="635.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">500</text>
+<line x1="737.00" y1="90" x2="737.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="737.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">1000</text>
+<line x1="839.00" y1="90" x2="839.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="839.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">1500</text>
+<line x1="941.00" y1="90" x2="941.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="941.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">2000</text>
+<line x1="1043.00" y1="90" x2="1043.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="1043.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">2500</text>
+<line x1="1145.00" y1="90" x2="1145.00" y2="480" stroke="#ececec" stroke-width="1"/>
+<text x="1145.00" y="508" text-anchor="middle" font-size="12" font-family="Arial" fill="#444">3000</text>
+<line x1="635.0" y1="467.00" x2="1145.0" y2="467.00" stroke="#ececec" stroke-width="1"/>
+<text x="625.0" y="471.00" text-anchor="end" font-size="12" font-family="Arial" fill="#444">1.5</text>
+<line x1="635.0" y1="402.00" x2="1145.0" y2="402.00" stroke="#ececec" stroke-width="1"/>
+<text x="625.0" y="406.00" text-anchor="end" font-size="12" font-family="Arial" fill="#444">1.6</text>
+<line x1="635.0" y1="337.00" x2="1145.0" y2="337.00" stroke="#ececec" stroke-width="1"/>
+<text x="625.0" y="341.00" text-anchor="end" font-size="12" font-family="Arial" fill="#444">1.7</text>
+<line x1="635.0" y1="272.00" x2="1145.0" y2="272.00" stroke="#ececec" stroke-width="1"/>
+<text x="625.0" y="276.00" text-anchor="end" font-size="12" font-family="Arial" fill="#444">1.8</text>
+<line x1="635.0" y1="207.00" x2="1145.0" y2="207.00" stroke="#ececec" stroke-width="1"/>
+<text x="625.0" y="211.00" text-anchor="end" font-size="12" font-family="Arial" fill="#444">1.9</text>
+<line x1="635.0" y1="142.00" x2="1145.0" y2="142.00" stroke="#ececec" stroke-width="1"/>
+<text x="625.0" y="146.00" text-anchor="end" font-size="12" font-family="Arial" fill="#444">2.0</text>
+<rect x="635.0" y="90" width="510.0" height="390" fill="none" stroke="#222" stroke-width="1.3"/>
+<text x="890.00" y="78" text-anchor="middle" font-size="16" font-family="Arial">500-3000 step</text>
+<polyline fill="none" stroke="#1f77b4" stroke-width="3" points="635.00,138.16 737.00,275.05 839.00,343.75 941.00,400.96 1043.00,400.05 1145.00,438.53"/>
+<polyline fill="none" stroke="#d62728" stroke-width="3" points="635.00,113.67 737.00,257.02 839.00,338.62 941.00,413.49 1043.00,422.50 1144.80,457.90"/>
+<circle cx="635.00" cy="138.16" r="4.5" fill="#1f77b4"/>
+<circle cx="737.00" cy="275.05" r="4.5" fill="#1f77b4"/>
+<circle cx="839.00" cy="343.75" r="4.5" fill="#1f77b4"/>
+<circle cx="941.00" cy="400.96" r="4.5" fill="#1f77b4"/>
+<circle cx="1043.00" cy="400.05" r="4.5" fill="#1f77b4"/>
+<circle cx="1145.00" cy="438.53" r="4.5" fill="#1f77b4"/>
+<circle cx="635.00" cy="113.67" r="4.5" fill="#d62728"/>
+<circle cx="737.00" cy="257.02" r="4.5" fill="#d62728"/>
+<circle cx="839.00" cy="338.62" r="4.5" fill="#d62728"/>
+<circle cx="941.00" cy="413.49" r="4.5" fill="#d62728"/>
+<circle cx="1043.00" cy="422.50" r="4.5" fill="#d62728"/>
+<circle cx="1144.80" cy="457.90" r="4.5" fill="#d62728"/>
+<text x="590" y="542" text-anchor="middle" font-size="16" font-family="Arial">Step</text>
+<text x="25" y="280" text-anchor="middle" font-size="16" font-family="Arial" transform="rotate(-90 25 280)">Validation Loss</text>
+</svg>

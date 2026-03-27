@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="620" viewBox="0 0 1000 620">
+<rect width="100%" height="100%" fill="white"/>
+<text x="500" y="28" text-anchor="middle" font-size="22" font-family="Arial">Layer Norm Ablation (Zoomed Early Training)</text>
+<line x1="90.00" y1="55" x2="90.00" y2="540" stroke="#e6e6e6" stroke-width="1"/>
+<text x="90.00" y="575" text-anchor="middle" font-size="13" font-family="Arial" fill="#444">0</text>
+<line x1="257.31" y1="55" x2="257.31" y2="540" stroke="#e6e6e6" stroke-width="1"/>
+<text x="257.31" y="575" text-anchor="middle" font-size="13" font-family="Arial" fill="#444">100</text>
+<line x1="424.62" y1="55" x2="424.62" y2="540" stroke="#e6e6e6" stroke-width="1"/>
+<text x="424.62" y="575" text-anchor="middle" font-size="13" font-family="Arial" fill="#444">200</text>
+<line x1="591.92" y1="55" x2="591.92" y2="540" stroke="#e6e6e6" stroke-width="1"/>
+<text x="591.92" y="575" text-anchor="middle" font-size="13" font-family="Arial" fill="#444">300</text>
+<line x1="759.23" y1="55" x2="759.23" y2="540" stroke="#e6e6e6" stroke-width="1"/>
+<text x="759.23" y="575" text-anchor="middle" font-size="13" font-family="Arial" fill="#444">400</text>
+<line x1="926.54" y1="55" x2="926.54" y2="540" stroke="#e6e6e6" stroke-width="1"/>
+<text x="926.54" y="575" text-anchor="middle" font-size="13" font-family="Arial" fill="#444">500</text>
+<line x1="90" y1="525.74" x2="960" y2="525.74" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="529.74" text-anchor="end" font-size="13" font-family="Arial" fill="#444">2</text>
+<line x1="90" y1="468.68" x2="960" y2="468.68" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="472.68" text-anchor="end" font-size="13" font-family="Arial" fill="#444">4</text>
+<line x1="90" y1="411.62" x2="960" y2="411.62" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="415.62" text-anchor="end" font-size="13" font-family="Arial" fill="#444">6</text>
+<line x1="90" y1="354.56" x2="960" y2="354.56" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="358.56" text-anchor="end" font-size="13" font-family="Arial" fill="#444">8</text>
+<line x1="90" y1="297.50" x2="960" y2="297.50" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="301.50" text-anchor="end" font-size="13" font-family="Arial" fill="#444">10</text>
+<line x1="90" y1="240.44" x2="960" y2="240.44" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="244.44" text-anchor="end" font-size="13" font-family="Arial" fill="#444">12</text>
+<line x1="90" y1="183.38" x2="960" y2="183.38" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="187.38" text-anchor="end" font-size="13" font-family="Arial" fill="#444">14</text>
+<line x1="90" y1="126.32" x2="960" y2="126.32" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="130.32" text-anchor="end" font-size="13" font-family="Arial" fill="#444">16</text>
+<line x1="90" y1="69.26" x2="960" y2="69.26" stroke="#e6e6e6" stroke-width="1"/>
+<text x="78" y="73.26" text-anchor="end" font-size="13" font-family="Arial" fill="#444">18</text>
+<line x1="90" y1="55" x2="90" y2="540" stroke="#222" stroke-width="1.5"/>
+<line x1="90" y1="540" x2="960" y2="540" stroke="#222" stroke-width="1.5"/>
+<text x="500" y="610" text-anchor="middle" font-size="16" font-family="Arial">Step</text>
+<text x="28" y="310" text-anchor="middle" font-size="16" font-family="Arial" transform="rotate(-90 28 310)">Validation Loss</text>
+<polyline fill="none" stroke="#1f77b4" stroke-width="3" points="90.00,318.54 926.54,525.57"/>
+<polyline fill="none" stroke="#d62728" stroke-width="3" points="90.00,73.80 173.65,477.95 257.31,498.28"/>
+<circle cx="90.00" cy="318.54" r="5" fill="#1f77b4"/>
+<circle cx="926.54" cy="525.57" r="5" fill="#1f77b4"/>
+<circle cx="90.00" cy="73.80" r="5" fill="#d62728"/>
+<circle cx="173.65" cy="477.95" r="5" fill="#d62728"/>
+<circle cx="257.31" cy="498.28" r="5" fill="#d62728"/>
+<rect x="650" y="70" width="290" height="64" rx="8" fill="#ffffff" stroke="#cccccc"/>
+<line x1="668" y1="92" x2="708" y2="92" stroke="#1f77b4" stroke-width="3"/>
+<circle cx="688" cy="92" r="4.5" fill="#1f77b4"/>
+<text x="720" y="97" font-size="14" font-family="Arial">Baseline (with RMSNorm)</text>
+<line x1="668" y1="117" x2="708" y2="117" stroke="#d62728" stroke-width="3"/>
+<circle cx="688" cy="117" r="4.5" fill="#d62728"/>
+<text x="720" y="122" font-size="14" font-family="Arial">No RMSNorm</text>
+<rect x="450" y="220" width="360" height="88" rx="8" fill="#fff5f5" stroke="#d62728"/>
+<text x="464" y="244" font-size="14" font-family="Arial" fill="#7f0000">No more points after step 100:</text>
+<text x="464" y="262" font-size="14" font-family="Arial" fill="#7f0000">training became numerically unstable,</text>
+<text x="464" y="280" font-size="14" font-family="Arial" fill="#7f0000">and later evaluation overflowed</text>
+<text x="464" y="298" font-size="14" font-family="Arial" fill="#7f0000">when computing perplexity.</text>
+<line x1="450" y1="262" x2="257.31" y2="498.28" stroke="#d62728" stroke-width="2"/>
+<rect x="430" y="370" width="395" height="68" rx="8" fill="#f4f8ff" stroke="#1f77b4"/>
+<text x="444" y="394" font-size="14" font-family="Arial" fill="#0b3d91">Baseline is only logged at steps 0 and 500</text>
+<text x="444" y="413" font-size="14" font-family="Arial" fill="#0b3d91">because this reference run used eval_interval=500.</text>
+<line x1="430" y1="402" x2="926.54" y2="525.57" stroke="#1f77b4" stroke-width="2"/>
+</svg>

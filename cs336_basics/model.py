@@ -130,6 +130,11 @@ class RMSNorm(nn.Module):
         
         # 5. 乘以可学习的增益参数 weight
         return x_normed * self.weight
+
+
+class IdentityNorm(nn.Module):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return x
     
 class SwiGLU(nn.Module):
     def __init__(self, d_model: int, d_ff: int, device=None, dtype=None):
@@ -168,6 +173,17 @@ class SwiGLU(nn.Module):
         
         # 门控相乘后，通过 W2 映射回原维度
         return self.w2(branch1 * branch2)
+
+
+class SiLUFFN(nn.Module):
+    def __init__(self, d_model: int, d_ff: int, device=None, dtype=None):
+        super().__init__()
+        factory_kwargs = {'device': device, 'dtype': dtype}
+        self.w1 = Linear(in_features=d_model, out_features=d_ff, **factory_kwargs)
+        self.w2 = Linear(in_features=d_ff, out_features=d_model, **factory_kwargs)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        return self.w2(torch.nn.functional.silu(self.w1(x)))
     
 class RotaryPositionalEmbedding(nn.Module):
     def __init__(self, theta: float, d_k: int, max_seq_len: int, device=None):
@@ -404,17 +420,28 @@ class TransformerBlock(nn.Module):
         d_ff: int,
         max_seq_len: int | None = None,
         rope_theta: float | None = None,
+        use_rmsnorm: bool = True,
+        norm_style: str = "pre",
+        ffn_style: str = "swiglu",
         device=None,
         dtype=None,
     ):
         """
-        组装单个 Pre-norm Transformer Block。
+        组装单个可切换 Pre-norm / Post-norm 的 Transformer Block。
         """
         super().__init__()
         factory_kwargs = {'device': device, 'dtype': dtype}
+        norm_cls = RMSNorm if use_rmsnorm else IdentityNorm
+        if norm_style not in {"pre", "post"}:
+            raise ValueError(f"Unsupported norm_style: {norm_style}")
+        if ffn_style not in {"swiglu", "silu"}:
+            raise ValueError(f"Unsupported ffn_style: {ffn_style}")
+        self.norm_style = norm_style
+        self.ffn_style = ffn_style
+        ffn_cls = SwiGLU if ffn_style == "swiglu" else SiLUFFN
         
         # 实例化咱们手搓的四个大件！
-        self.norm1 = RMSNorm(d_model, **factory_kwargs)
+        self.norm1 = norm_cls(d_model, **factory_kwargs) if use_rmsnorm else norm_cls()
         self.attn = MultiHeadSelfAttention(
             d_model,
             num_heads,
@@ -422,8 +449,8 @@ class TransformerBlock(nn.Module):
             rope_theta=rope_theta,
             **factory_kwargs,
         )
-        self.norm2 = RMSNorm(d_model, **factory_kwargs)
-        self.ffn = SwiGLU(d_model, d_ff, **factory_kwargs)
+        self.norm2 = norm_cls(d_model, **factory_kwargs) if use_rmsnorm else norm_cls()
+        self.ffn = ffn_cls(d_model, d_ff, **factory_kwargs)
 
     def forward(
         self,
@@ -433,13 +460,14 @@ class TransformerBlock(nn.Module):
         """
         前向传播：极其干净的残差连接。
         """
-        # 第一道工序：过 Norm1，然后进注意力层，最后加上原始的 x (残差)
-        x = x + self.attn(self.norm1(x), token_positions=token_positions)
-        
-        # 第二道工序：过 Norm2，然后进 FFN (SwiGLU)，再次加上残差
-        x = x + self.ffn(self.norm2(x))
-        
-        return x
+        if self.norm_style == "pre":
+            x = x + self.attn(self.norm1(x), token_positions=token_positions)
+            x = x + self.ffn(self.norm2(x))
+            return x
+
+        z = self.norm1(x + self.attn(x, token_positions=token_positions))
+        y = self.norm2(z + self.ffn(z))
+        return y
     
 class TransformerLM(nn.Module):
     def __init__(
@@ -451,11 +479,21 @@ class TransformerLM(nn.Module):
         num_heads: int, 
         d_ff: int, 
         rope_theta: float | None = None,
+        use_rmsnorm: bool = True,
+        norm_style: str = "pre",
+        ffn_style: str = "swiglu",
         device=None, 
         dtype=None
     ):
         super().__init__()
         factory_kwargs = {'device': device, 'dtype': dtype}
+        norm_cls = RMSNorm if use_rmsnorm else IdentityNorm
+        if norm_style not in {"pre", "post"}:
+            raise ValueError(f"Unsupported norm_style: {norm_style}")
+        if ffn_style not in {"swiglu", "silu"}:
+            raise ValueError(f"Unsupported ffn_style: {ffn_style}")
+        self.norm_style = norm_style
+        self.ffn_style = ffn_style
         
         # 1. 大门：Embedding 层，把数字 ID 变成稠密向量
         self.embedding = Embedding(vocab_size, d_model, **factory_kwargs)
@@ -469,13 +507,16 @@ class TransformerLM(nn.Module):
                 d_ff,
                 max_seq_len=context_length,
                 rope_theta=rope_theta,
+                use_rmsnorm=use_rmsnorm,
+                norm_style=norm_style,
+                ffn_style=ffn_style,
                 **factory_kwargs,
             )
             for _ in range(num_layers)
         ])
         
         # 3. 终极裁判：最后再做一次 RMSNorm
-        self.final_norm = RMSNorm(d_model, **factory_kwargs)
+        self.final_norm = norm_cls(d_model, **factory_kwargs) if use_rmsnorm else norm_cls()
         
         # 4. 翻译官：LM Head (无偏置线性层)
         # 它的任务是把 d_model 维的特征，映射回 vocab_size 维，用来预测下一个词！

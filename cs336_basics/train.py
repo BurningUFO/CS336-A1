@@ -80,6 +80,9 @@ class TrainConfig:
     num_layers: int = 4
     num_heads: int = 8
     rope_theta: float = 10_000.0
+    use_rmsnorm: bool = True
+    norm_style: str = "pre"
+    ffn_style: str = "swiglu"
     batch_size: int = 32
     max_steps: int = 3000
     eval_interval: int = 100
@@ -88,6 +91,9 @@ class TrainConfig:
     learning_rate: float = 3e-4
     min_learning_rate: float = 3e-5
     warmup_iters: int = 100
+    beta1: float = 0.9
+    beta2: float = 0.999
+    eps: float = 1e-8
     weight_decay: float = 0.01
     grad_clip: float = 1.0
     seed: int = 42
@@ -108,6 +114,10 @@ def parse_args() -> TrainConfig:
     parser.add_argument("--num-layers", type=int, default=TrainConfig.num_layers)
     parser.add_argument("--num-heads", type=int, default=TrainConfig.num_heads)
     parser.add_argument("--rope-theta", type=float, default=TrainConfig.rope_theta)
+    parser.add_argument("--no-rope", action="store_true", help="Disable RoPE / use NoPE for ablation experiments.")
+    parser.add_argument("--no-rmsnorm", action="store_true", help="Disable RMSNorm for ablation experiments.")
+    parser.add_argument("--norm-style", choices=("pre", "post"), default=TrainConfig.norm_style)
+    parser.add_argument("--ffn-style", choices=("swiglu", "silu"), default=TrainConfig.ffn_style)
     parser.add_argument("--batch-size", type=int, default=TrainConfig.batch_size)
     parser.add_argument("--max-steps", type=int, default=TrainConfig.max_steps)
     parser.add_argument("--eval-interval", type=int, default=TrainConfig.eval_interval)
@@ -116,6 +126,9 @@ def parse_args() -> TrainConfig:
     parser.add_argument("--learning-rate", type=float, default=TrainConfig.learning_rate)
     parser.add_argument("--min-learning-rate", type=float, default=TrainConfig.min_learning_rate)
     parser.add_argument("--warmup-iters", type=int, default=TrainConfig.warmup_iters)
+    parser.add_argument("--beta1", type=float, default=TrainConfig.beta1)
+    parser.add_argument("--beta2", type=float, default=TrainConfig.beta2)
+    parser.add_argument("--eps", type=float, default=TrainConfig.eps)
     parser.add_argument("--weight-decay", type=float, default=TrainConfig.weight_decay)
     parser.add_argument("--grad-clip", type=float, default=TrainConfig.grad_clip)
     parser.add_argument("--seed", type=int, default=TrainConfig.seed)
@@ -123,6 +136,11 @@ def parse_args() -> TrainConfig:
     parser.add_argument("--checkpoint-dir", default=TrainConfig.checkpoint_dir)
     parser.add_argument("--resume-from")
     args = parser.parse_args()
+    args.use_rmsnorm = not args.no_rmsnorm
+    if args.no_rope:
+        args.rope_theta = None
+    del args.no_rmsnorm
+    del args.no_rope
     return TrainConfig(**vars(args))
 
 
@@ -139,6 +157,9 @@ def build_model(cfg: TrainConfig) -> TransformerLM:
         num_heads=cfg.num_heads,
         d_ff=cfg.d_ff,
         rope_theta=cfg.rope_theta,
+        use_rmsnorm=cfg.use_rmsnorm,
+        norm_style=cfg.norm_style,
+        ffn_style=cfg.ffn_style,
         device=cfg.device,
     )
 
@@ -190,6 +211,8 @@ def main() -> None:
     optimizer = AdamW(
         model.parameters(),
         lr=cfg.learning_rate,
+        betas=(cfg.beta1, cfg.beta2),
+        eps=cfg.eps,
         weight_decay=cfg.weight_decay,
     )
 

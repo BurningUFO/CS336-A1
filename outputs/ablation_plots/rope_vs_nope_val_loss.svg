@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<rect width="100%" height="100%" fill="white"/>
+<text x="600.0" y="30" text-anchor="middle" font-size="24" font-family="Arial">RoPE vs NoPE (first 3000 steps)</text>
+<line x1="90.00" y1="60" x2="90.00" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="90.00" y="748" text-anchor="middle" font-size="14" font-family="Arial">0</text>
+<line x1="196.25" y1="60" x2="196.25" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="196.25" y="748" text-anchor="middle" font-size="14" font-family="Arial">375</text>
+<line x1="302.50" y1="60" x2="302.50" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="302.50" y="748" text-anchor="middle" font-size="14" font-family="Arial">750</text>
+<line x1="408.75" y1="60" x2="408.75" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="408.75" y="748" text-anchor="middle" font-size="14" font-family="Arial">1125</text>
+<line x1="515.00" y1="60" x2="515.00" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="515.00" y="748" text-anchor="middle" font-size="14" font-family="Arial">1500</text>
+<line x1="621.25" y1="60" x2="621.25" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="621.25" y="748" text-anchor="middle" font-size="14" font-family="Arial">1875</text>
+<line x1="727.50" y1="60" x2="727.50" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="727.50" y="748" text-anchor="middle" font-size="14" font-family="Arial">2250</text>
+<line x1="833.75" y1="60" x2="833.75" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="833.75" y="748" text-anchor="middle" font-size="14" font-family="Arial">2625</text>
+<line x1="940.00" y1="60" x2="940.00" y2="720" stroke="#e0e0e0" stroke-width="1"/>
+<text x="940.00" y="748" text-anchor="middle" font-size="14" font-family="Arial">3000</text>
+<line x1="90" y1="720.00" x2="940" y2="720.00" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="725.00" text-anchor="end" font-size="14" font-family="Arial">1.16</text>
+<line x1="90" y1="625.71" x2="940" y2="625.71" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="630.71" text-anchor="end" font-size="14" font-family="Arial">2.37</text>
+<line x1="90" y1="531.43" x2="940" y2="531.43" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="536.43" text-anchor="end" font-size="14" font-family="Arial">3.58</text>
+<line x1="90" y1="437.14" x2="940" y2="437.14" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="442.14" text-anchor="end" font-size="14" font-family="Arial">4.80</text>
+<line x1="90" y1="342.86" x2="940" y2="342.86" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="347.86" text-anchor="end" font-size="14" font-family="Arial">6.01</text>
+<line x1="90" y1="248.57" x2="940" y2="248.57" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="253.57" text-anchor="end" font-size="14" font-family="Arial">7.22</text>
+<line x1="90" y1="154.29" x2="940" y2="154.29" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="159.29" text-anchor="end" font-size="14" font-family="Arial">8.44</text>
+<line x1="90" y1="60.00" x2="940" y2="60.00" stroke="#e0e0e0" stroke-width="1"/>
+<text x="78" y="65.00" text-anchor="end" font-size="14" font-family="Arial">9.65</text>
+<line x1="90" y1="720" x2="940" y2="720" stroke="black" stroke-width="2"/>
+<line x1="90" y1="60" x2="90" y2="720" stroke="black" stroke-width="2"/>
+<text x="515.0" y="780" text-anchor="middle" font-size="18" font-family="Arial">Step</text>
+<text x="28" y="390.0" text-anchor="middle" font-size="18" font-family="Arial" transform="rotate(-90 28 390.0)">val_loss</text>
+<text x="960" y="70" font-size="18" font-family="Arial">Runs</text>
+<polyline fill="none" stroke="#1f77b4" stroke-width="2.5" points="90.00,90.09 231.67,654.08 373.33,670.45 515.00,678.67 656.67,685.51 798.33,685.40 940.00,690.00"/>
+<circle cx="90.00" cy="90.09" r="3" fill="#1f77b4"/>
+<circle cx="231.67" cy="654.08" r="3" fill="#1f77b4"/>
+<circle cx="373.33" cy="670.45" r="3" fill="#1f77b4"/>
+<circle cx="515.00" cy="678.67" r="3" fill="#1f77b4"/>
+<circle cx="656.67" cy="685.51" r="3" fill="#1f77b4"/>
+<circle cx="798.33" cy="685.40" r="3" fill="#1f77b4"/>
+<circle cx="940.00" cy="690.00" r="3" fill="#1f77b4"/>
+<line x1="960" y1="99" x2="988" y2="99" stroke="#1f77b4" stroke-width="3"/>
+<text x="996" y="104" font-size="15" font-family="Arial">rope_baseline</text>
+<polyline fill="none" stroke="#d62728" stroke-width="2.5" points="90.00,90.00 231.67,641.83 373.33,664.05 515.00,674.14 656.67,683.02 798.33,683.62 939.72,687.87"/>
+<circle cx="90.00" cy="90.00" r="3" fill="#d62728"/>
+<circle cx="231.67" cy="641.83" r="3" fill="#d62728"/>
+<circle cx="373.33" cy="664.05" r="3" fill="#d62728"/>
+<circle cx="515.00" cy="674.14" r="3" fill="#d62728"/>
+<circle cx="656.67" cy="683.02" r="3" fill="#d62728"/>
+<circle cx="798.33" cy="683.62" r="3" fill="#d62728"/>
+<circle cx="939.72" cy="687.87" r="3" fill="#d62728"/>
+<line x1="960" y1="123" x2="988" y2="123" stroke="#d62728" stroke-width="3"/>
+<text x="996" y="128" font-size="15" font-family="Arial">nope</text>
+</svg>

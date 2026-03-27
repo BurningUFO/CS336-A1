@@ -1,23 +1,16 @@
-# OpenWebText BPE On Colab
+# OpenWebText BPE Experiments
 
-This folder contains a standalone script for training a byte-level BPE tokenizer
-on an OpenWebText text file and saving the resulting artifacts.
+This folder contains two practical workflows:
 
-Recommended Colab workflow:
+1. `run_openwebtext_bpe.py`
+   A direct full-file BPE trainer. Use this only if you have enough RAM for the
+   entire input text plus the BPE bookkeeping structures.
+2. `make_openwebtext_sample.py` + `run_openwebtext_bpe_chunked.py`
+   A safer local workflow for a 32 GB machine:
+   first create a sampled shard, then train BPE on that shard with chunked
+   pretokenization.
 
-```bash
-git clone git@github.com:BurningUFO/CS336-A1.git
-cd CS336-A1
-python -m pip install -e .
-```
-
-If you want the Stanford sample OpenWebText files:
-
-```bash
-python download_data.py
-```
-
-Then run:
+## Full-file workflow
 
 ```bash
 python experiments/openwebtext_bpe/run_openwebtext_bpe.py \
@@ -32,9 +25,64 @@ Generated outputs:
 - `outputs/openwebtext_bpe/owt_merges.pkl`
 - `outputs/openwebtext_bpe/owt_bpe_summary.json`
 
-Important note:
+## Sampled + chunked local workflow
 
-- The current `train_bpe` implementation reads the full input text into memory.
-- Full OpenWebText training may require a high-RAM runtime or a smaller shard if
-  standard Colab RAM is not enough.
+### Step 1: stream-sample a local shard
 
+```bash
+python experiments/openwebtext_bpe/make_openwebtext_sample.py \
+  --input-path data/owt_train.txt \
+  --output-path data/openwebtext_sampled_2GB.txt \
+  --keep-prob 0.2 \
+  --target-size-gb 2.0
+```
+
+This reads the full `owt_train.txt` file line by line and keeps roughly 20% of
+lines until the sampled output reaches about 2 GB.
+
+### Step 2: train BPE on the sampled file with chunked pretokenization
+
+```bash
+python experiments/openwebtext_bpe/run_openwebtext_bpe_chunked.py \
+  --input-path data/openwebtext_sampled_2GB.txt \
+  --vocab-size 32000 \
+  --chunk-size-mb 128 \
+  --output-dir outputs/openwebtext_bpe_chunked
+```
+
+Generated outputs:
+
+- `outputs/openwebtext_bpe_chunked/owt_chunked_vocab.pkl`
+- `outputs/openwebtext_bpe_chunked/owt_chunked_merges.pkl`
+- `outputs/openwebtext_bpe_chunked/owt_chunked_bpe_summary.json`
+
+### Recommended stable launcher on Windows
+
+For long local runs, prefer the PowerShell launcher below. It resolves absolute
+paths, validates the Python environment and write permissions, stores a run
+manifest, and captures the full native process log to disk.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File experiments\openwebtext_bpe\run_openwebtext_bpe_chunked_stable.ps1 `
+  -InputPath data\openwebtext_sampled_2_5GB.txt `
+  -VocabSize 32000 `
+  -ChunkSizeMb 128 `
+  -OutputDir outputs\openwebtext_bpe_chunked
+```
+
+To validate the environment without starting training:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File experiments\openwebtext_bpe\run_openwebtext_bpe_chunked_stable.ps1 `
+  -InputPath data\openwebtext_sampled_2_5GB.txt `
+  -OutputDir outputs\openwebtext_bpe_chunked `
+  -ValidateOnly
+```
+
+## Important note
+
+The chunked workflow only chunks the raw-text pretokenization phase. It avoids
+duplicating the entire input text in memory, but the global `word_freq`,
+`pair_counts`, `pair_to_words`, and merge structures still live in memory. This
+is much safer for a sampled 2 GB shard on a 32 GB machine, but it is not a
+guarantee that full 11.9 GB OpenWebText will fit.

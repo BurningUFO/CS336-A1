@@ -54,6 +54,12 @@ def parse_args() -> argparse.Namespace:
         help="Restrict sampling to the top-k logits. Use 0 to disable.",
     )
     parser.add_argument(
+        "--top-p",
+        type=float,
+        default=1.0,
+        help="Nucleus sampling threshold. Use 1.0 to disable.",
+    )
+    parser.add_argument(
         "--seed",
         type=int,
         default=42,
@@ -151,6 +157,9 @@ def build_model_from_config(cfg: dict[str, Any], device: str) -> TransformerLM:
         num_heads=cfg["num_heads"],
         d_ff=cfg["d_ff"],
         rope_theta=cfg["rope_theta"],
+        use_rmsnorm=cfg.get("use_rmsnorm", True),
+        norm_style=cfg.get("norm_style", "pre"),
+        ffn_style=cfg.get("ffn_style", "swiglu"),
         device=device,
     )
 
@@ -160,7 +169,7 @@ def load_checkpoint_weights(model: TransformerLM, checkpoint_path: Path) -> None
     model.load_state_dict(checkpoint["model"])
 
 
-def sample_next_token(logits: torch.Tensor, temperature: float, top_k: int) -> int:
+def sample_next_token(logits: torch.Tensor, temperature: float, top_k: int, top_p: float) -> int:
     if temperature <= 0:
         return int(torch.argmax(logits).item())
 
@@ -171,6 +180,21 @@ def sample_next_token(logits: torch.Tensor, temperature: float, top_k: int) -> i
         logits = logits.masked_fill(logits < cutoff, float("-inf"))
 
     probs = torch.softmax(logits, dim=-1)
+    if 0.0 < top_p < 1.0:
+        sorted_probs, sorted_indices = torch.sort(probs, descending=True)
+        cumulative_probs = torch.cumsum(sorted_probs, dim=-1)
+
+        keep_mask = cumulative_probs <= top_p
+        keep_mask[0] = True
+        first_exceed = torch.nonzero(cumulative_probs >= top_p, as_tuple=False)
+        if len(first_exceed) > 0:
+            keep_mask[first_exceed[0].item()] = True
+
+        filtered_probs = torch.zeros_like(probs)
+        kept_indices = sorted_indices[keep_mask]
+        filtered_probs[kept_indices] = probs[kept_indices]
+        probs = filtered_probs / filtered_probs.sum()
+
     return int(torch.multinomial(probs, num_samples=1).item())
 
 
@@ -180,6 +204,7 @@ def generate_ids(
     max_new_tokens: int,
     temperature: float,
     top_k: int,
+    top_p: float,
     device: str,
     stop_token_id: int | None,
 ) -> list[int]:
@@ -196,7 +221,7 @@ def generate_ids(
 
             x = torch.tensor([model_input_ids], dtype=torch.long, device=device)
             logits = model(x)[0, -1]
-            next_token_id = sample_next_token(logits, temperature, top_k)
+            next_token_id = sample_next_token(logits, temperature, top_k, top_p)
             generated.append(next_token_id)
 
             if stop_token_id is not None and next_token_id == stop_token_id:
@@ -237,6 +262,7 @@ def main() -> None:
         max_new_tokens=args.max_new_tokens,
         temperature=args.temperature,
         top_k=args.top_k,
+        top_p=args.top_p,
         device=args.device,
         stop_token_id=stop_token_id,
     )

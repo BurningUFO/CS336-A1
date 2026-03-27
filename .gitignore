@@ -173,3 +173,10 @@ images/_tmp/
 .bpe_*.json
 .bpe_*.log
 assignment1_raw.txt
+
+# Local writeup scratch files
+night-work.md
+problems_v2.md
+to do.md
+调learning_rate.md
+Problem (`adamwAccounting`)：AdamW 资源估算.md
